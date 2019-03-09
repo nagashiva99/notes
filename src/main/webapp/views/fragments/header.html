@@ -1,0 +1,1255 @@
+<nav class="navbar navbar-default" role="navigation"
+	th:fragment="header">
+	<div class="container topContainer">
+		<div class="navbar-header col-md-2">
+			<button type="button" class="navbar-toggle collapsed"
+				data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+				aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a th:href="${omicsBaseURL}" target=""><img class="logo"
+				th:src="@{/resources/img/logo.png}" /></a>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav  col-md-6">
+			<li><a href="http://www.omicsonline.org/about.php"
+					th:href="${urls.aboutUs}" target="_blank">About Us</a></li>
+				<!--<li><a th:href="@{/pattern/all}" target="_blank">Conferences</a></li>-->
+                                <li class="dropdown"><a id="drop1" href="#"
+					class="dropdown-toggle" data-toggle="dropdown" role="button"
+					aria-haspopup="true" aria-expanded="false"> Conferences <span
+						class="caret"></span>
+				</a>
+					<ul class="dropdown-menu" aria-labelledby="drop1">
+                                            <li><a th:href="${omicsBaseURL}+'/upcoming-conferences'" target="">Upcoming Conferences</a></li>
+                                            <li><a th:href="${omicsBaseURL}+'/previous-conferences'" target="">Previous Conferences</a></li>
+					</ul></li>
+				
+				<li class="dropdown"><a id="drop1" href="#"
+					class="dropdown-toggle" data-toggle="dropdown" role="button"
+					aria-haspopup="true" aria-expanded="false"> Journals <span
+						class="caret"></span>
+				</a>
+					<ul class="dropdown-menu" aria-labelledby="drop1">
+						<li><a
+							href="http://www.omicsonline.org/open-access-journals-list.php"
+							th:href="${urls.aTozJournals}" target="_blank">A-Z Journals</a></li>
+						<li><a
+							href="http://www.omicsonline.org/scientific-journals.php"
+							th:href="${urls.browseBySubjectJournal}" target="_blank">Browse
+								by Subject</a></li>
+						<li><a
+							href="http://www.omicsonline.org/newly-launched-journals.php"
+							th:href="${urls.newlyLaunchedJournals}" target="_blank">Newly
+								Launched Journals</a></li>
+						<li><a href="http://www.omicsonline.org/open-access.php"
+							th:href="${urls.openAccess}" target="_blank">Open Access</a></li>
+					</ul></li>
+					
+					<li><a href="#" th:href="${omicsBaseURL}+'/contact-us'" target="">Contact
+								Us</a></li>
+			
+				<!-- <li><a href="#contact">Membership</a></li>-->
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false">More <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+					<li><a href="#" th:href="${omicsBaseURL}+'/speakers'" target="_blank">Speakers</a></li>
+						<li><a th:href="${omicsBaseURL}+'/universities'" target="_blank">Universities</a></li>
+					</ul></li>
+			</ul>
+			<form class="searchbar form-search form-inline">
+				<div class="form-group">
+					<input type="text" class="search-query" id="searchHeader"
+						placeholder="Search" />
+				</div>
+			</form>
+			<div></div>
+			<ul class="nav navbar-nav navbar-right">
+				<th th:if="${loggedInUser}">
+					<li><span class="pull-right">!</span><a href="#"
+						th:href="${omicsBaseURL}+'/user/dashboard'" th:text="${loggedInUser.name}"
+						target="_blank">User Name</a></li>
+				</th>
+				<th th:unless="${loggedInUser}">
+					<!--  <li><a th:href="${urls.baseURL}+'member/RegisterUser.html'">Register</a></li>
+					<li><a th:href="${urls.baseURL}+'member/login.html'">Signin</a></li>-->
+					<!-- <li><a href="#" id="signUpBtn">Register</a></li>  th:href="@{/member/RegisterUser.html}" -->
+					<li><a href="#" id="signInBtn">Sign In</a></li>
+				</th>
+			</ul>
+		</div>
+		<!--/.nav-collapse -->
+	</div>
+	<!-- modal for login -->
+
+	<div class="modal fade reglogin" role="dialog" id="loginModal"
+		style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close" id="closeLoginModal">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Sign in</h4>
+				</div>
+				<div class="modal-body" style="text-align: center">
+					<div class="social-buttons">
+						<!-- <fb:login-button scope="public_profile,email" onlogin="App.checkLoginState();">
+</fb:login-button> -->
+
+						<i id=""
+							class="  fa fa-facebook-square social-facebook faceBookLogin"></i>
+						<i id="googlePlusLogin"
+							class="fa fa-google-plus-square social-google"></i>
+						<!-- <i class="fa fa-linkedin-square social-linkedin"></i>
+<i class="fa fa-twitter-square social-twitter"></i>
+<i class="fa fa-yc-square social-yahoo"></i> -->
+
+
+					</div>
+					<hr />
+					<b>or sign in with</b>
+
+					<div class="row">
+						<div class="col-md-1"></div>
+						<div class="col-md-10">
+							<form id="memberLoginForm" class="cmxform" role="form">
+								<div class="form-group">
+									<label for="username" class="control-label">USERNAME / EMAIL
+										ADDRESS<sup class="manadatory fa fa-asterisk"></sup>
+									</label> <input type="text" class="form-control required" id="username"
+										name="userName" value="" placeholder="example@gmail.com" />
+
+								</div>
+								<div class="form-group">
+									<label for="password" class="control-label">PASSWORD<sup
+										class="manadatory fa fa-asterisk"></sup></label> <input
+										type="password" class="form-control required" id="password"
+										name="password" value="" />
+
+								</div>
+
+
+								<div class="form-group">
+
+									<span> <a href="#" class="pull-right forgotPassword"
+										id="forgotPasswordInLogIn">Forgot password?</a></span> <span>Don't
+										have an account? <a href="#" id="signUpBtnInSignIn"
+										class="text-danger" style="margin-top:1px;color:#ca5556;">Sign Up </a>
+									</span>
+
+								</div>
+
+
+
+								<button type="button" id="signIn"
+									class="btn btn-success btn-block">Sign In</button>
+
+							</form>
+						</div>
+						<div class="col-md-1"></div>
+					</div>
+
+				</div>
+
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+
+	<!-- modal for signup -->
+	<div class="modal fade reglogin" role="dialog" id="signUpModal"
+		style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close" id="closeSignupModal">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Sign up with</h4>
+				</div>
+				<div class="modal-body" style="text-align: center">
+					<div class="social-buttons">
+						<!-- <fb:login-button scope="public_profile,email" onlogin="App.checkLoginState();">
+</fb:login-button> -->
+
+						<i id=""
+							class="  fa fa-facebook-square social-facebook faceBookLogin"></i>
+						<i id="googlePlusLoginInRegister"
+							class="fa fa-google-plus-square social-google"></i>
+						<!-- <i class="fa fa-linkedin-square social-linkedin"></i>
+<i class="fa fa-twitter-square social-twitter"></i>
+<i class="fa fa-yc-square social-yahoo"></i> -->
+
+
+					</div>
+					<hr />
+					<b>or sign up with</b>
+
+
+					<form id="signUpForm" class="cmxform" role="form">
+						<div class="form-group">
+							<input type="text" class="form-control first-child required"
+								id="name" name="name" value="" placeholder="Name" />
+
+						</div>
+						<sup class="manadatory fa fa-asterisk"></sup>
+						<div class="form-group">
+							<input type="text" class="form-control required" id="userNameInSignUp"
+								name="userName" value="" placeholder="Username" />
+
+						</div>
+						<sup class="manadatory fa fa-asterisk"></sup>
+						<div class="form-group">
+							<input type="text" class="form-control required" id="email"
+								name="email" value="" placeholder="example@gmail.com" />
+
+						</div>
+						<sup class="manadatory fa fa-asterisk"></sup>
+						<div class="form-group">
+							<input type="password" class="form-control required"
+								id="password" name="password" value="" placeholder="Password" />
+
+						</div>
+						<sup class="manadatory fa fa-asterisk"></sup>
+						<div class="form-group">
+							<input type="password" class="form-control last-child required"
+								id="repeatPassword" value="" placeholder="Repeat Password" />
+
+
+						</div>
+						<sup class="manadatory fa fa-asterisk"></sup>
+						<div class="form-group">
+							<div class="g-recaptcha captcha" id="signUpRecaptcha"></div>
+						</div>
+
+						<div class="form-group">
+
+							<a href="#" class="pull-left" id="signInBtnInSignUp">Already
+								have an account? <span class="text-danger">Sign In</span>
+							</a> <a href="#" class="pull-right forgotPassword"
+								id="forgotPasswordInSignUp">Forgot password?</a>
+
+						</div>
+
+
+
+						<button type="button" id="signUp"
+							class="btn btn-success btn-block">Sign Up</button>
+
+					</form>
+
+
+
+				</div>
+
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+
+	<!-- modal for forgot password -->
+	<div class="modal fade reglogin" role="dialog" id="forgotPasswordModal"
+		style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close" id="closeForgotPasswordModal">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">FORGOT PASSWORD</h4>
+				</div>
+				<div class="modal-body" style="text-align: center">
+
+
+					<form id="forgotPasswordForm" class="cmxform" role="form">
+						<div class="form-group">
+							<label for="email" class="control-label">EMAIL ADDRESS<sup
+								class="manadatory fa fa-asterisk"></sup>
+							</label> <input type="text" class="form-control email required"
+								id="email" name="email" value="" placeholder="example@gmail.com" />
+
+						</div>
+
+
+
+						<button type="button" id="forgotPassword"
+							class="btn btn-success btn-block">SEND RESET PASSWORD
+							LINK</button>
+
+					</form>
+
+
+
+				</div>
+
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+
+
+	<!-- end -->
+</nav>
+
+<nav class="navbar navbar-default homePage" role="navigation"
+	th:fragment="homeHeader">
+	<div class="container topContainer">
+		<div class="navbar-header col-md-2">
+			<button type="button" class="navbar-toggle collapsed"
+				data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+				aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a th:href="${omicsBaseURL}" target=""><img class="logo"
+				th:src="@{/resources/img/logo.png}" /></a>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav  col-md-6">
+			<li><a href="http://www.omicsonline.org/about.php"
+					th:href="${urls.aboutUs}" target="_blank">About Us</a></li>
+				<!--<li><a th:href="@{/pattern/all}" target="_blank">Conferences</a></li>-->
+                                <li class="dropdown"><a id="drop1" href="#"
+					class="dropdown-toggle" data-toggle="dropdown" role="button"
+					aria-haspopup="true" aria-expanded="false"> Conferences <span
+						class="caret"></span>
+				</a>
+					<ul class="dropdown-menu" aria-labelledby="drop1">
+                                            <li><a th:href="${omicsBaseURL}+'/upcoming-conferences'" target="">Upcoming Conferences</a></li>
+                                            <li><a th:href="${omicsBaseURL}+'/previous-conferences'" target="">Previous Conferences</a></li>
+					</ul></li>
+				
+				<li class="dropdown"><a id="drop1" href="#"
+					class="dropdown-toggle" data-toggle="dropdown" role="button"
+					aria-haspopup="true" aria-expanded="false"> Journals <span
+						class="caret"></span>
+				</a>
+					<ul class="dropdown-menu" aria-labelledby="drop1">
+						<li><a
+							href="http://www.omicsonline.org/open-access-journals-list.php"
+							th:href="${urls.aTozJournals}" target="_blank">A-Z Journals</a></li>
+						<li><a
+							href="http://www.omicsonline.org/scientific-journals.php"
+							th:href="${urls.browseBySubjectJournal}" target="_blank">Browse
+								by Subject</a></li>
+						<li><a
+							href="http://www.omicsonline.org/newly-launched-journals.php"
+							th:href="${urls.newlyLaunchedJournals}" target="_blank">Newly
+								Launched Journals</a></li>
+						<li><a href="http://www.omicsonline.org/open-access.php"
+							th:href="${urls.openAccess}" target="_blank">Open Access</a></li>
+					</ul></li>
+					
+					<li><a href="#" th:href="${omicsBaseURL}+'/contact-us'" target="">Contact
+								Us</a></li>
+			
+				<!-- <li><a href="#contact">Membership</a></li>-->
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false">More <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+					<li><a href="#" th:href="${omicsBaseURL}+'/speakers'" target="_blank">Speakers
+								</a></li>
+						<li><a th:href="${omicsBaseURL}+'/universities'" target="_blank">Universities</a></li>
+					</ul></li>
+			</ul>
+<!-- 			<form class="searchbar form-search form-inline">
+				<div class="form-group">
+					<input type="text" class="search-query" id="searchHeader"
+						placeholder="Search" />
+				</div>
+			</form> -->
+			<div></div>
+			<ul class="nav navbar-nav navbar-right">
+				<th th:if="${loggedInUser}">
+					<li><span class="pull-right">!</span><a href="#"
+						th:href="${omicsBaseURL}+'/user/dashboard'" th:text="${loggedInUser.name}"
+						target="_blank">User Name</a></li>
+				</th>
+				<th th:unless="${loggedInUser}">
+					<!--  <li><a th:href="${urls.baseURL}+'member/RegisterUser.html'">Register</a></li>
+					<li><a th:href="${urls.baseURL}+'member/login.html'">Signin</a></li>-->
+					<!-- <li><a href="#" id="signUpBtn">Register</a></li>  th:href="@{/member/RegisterUser.html}" -->
+					<li><a href="#" id="signInBtn">Sign In</a></li>
+				</th>
+			</ul>
+		</div>
+		<!--/.nav-collapse -->
+	</div>
+	<!-- modal for login -->
+
+	<div class="modal fade reglogin" role="dialog" id="loginModal"
+		style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close" id="closeLoginModal">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Sign in</h4>
+				</div>
+				<div class="modal-body" style="text-align: center">
+					<div class="social-buttons">
+						<!-- <fb:login-button scope="public_profile,email" onlogin="App.checkLoginState();">
+</fb:login-button> -->
+
+						<i id=""
+							class="  fa fa-facebook-square social-facebook faceBookLogin"></i>
+						<i id="googlePlusLogin"
+							class="fa fa-google-plus-square social-google"></i>
+						<!-- <i class="fa fa-linkedin-square social-linkedin"></i>
+<i class="fa fa-twitter-square social-twitter"></i>
+<i class="fa fa-yc-square social-yahoo"></i> -->
+
+
+					</div>
+					<hr />
+					<b>or sign in with</b>
+
+					<div class="row">
+						<div class="col-md-1"></div>
+						<div class="col-md-10">
+							<form id="memberLoginForm" class="cmxform" role="form">
+								<div class="form-group">
+									<label for="username" class="control-label">EMAIL
+										ADDRESS<sup class="manadatory fa fa-asterisk"></sup>
+									</label> <input type="text" class="form-control required" id="username"
+										name="userName" value="" placeholder="example@gmail.com" />
+
+								</div>
+								<div class="form-group">
+									<label for="password" class="control-label">PASSWORD<sup
+										class="manadatory fa fa-asterisk"></sup></label> <input
+										type="password" class="form-control required" id="password"
+										name="password" value="" />
+
+								</div>
+
+
+								<div class="form-group">
+
+									<span> <a href="#" class="pull-right forgotPassword"
+										id="forgotPasswordInLogIn">Forgot password?</a></span> <span>Don't
+										have an account? <a href="#" id="signUpBtnInSignIn"
+										class="text-danger" style="margin-top:1px;color:#ca5556;">Sign Up </a>
+									</span>
+
+								</div>
+
+
+
+								<button type="button" id="signIn"
+									class="btn btn-success btn-block">Sign In</button>
+
+							</form>
+						</div>
+						<div class="col-md-1"></div>
+					</div>
+
+				</div>
+
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+
+	<!-- modal for signup -->
+	<div class="modal fade reglogin" role="dialog" id="signUpModal"
+		style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close" id="closeSignupModal">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Sign up with</h4>
+				</div>
+				<div class="modal-body" style="text-align: center">
+					<div class="social-buttons">
+						<!-- <fb:login-button scope="public_profile,email" onlogin="App.checkLoginState();">
+</fb:login-button> -->
+
+						<i id=""
+							class="  fa fa-facebook-square social-facebook faceBookLogin"></i>
+						<i id="googlePlusLoginInRegister"
+							class="fa fa-google-plus-square social-google"></i>
+						<!-- <i class="fa fa-linkedin-square social-linkedin"></i>
+<i class="fa fa-twitter-square social-twitter"></i>
+<i class="fa fa-yc-square social-yahoo"></i> -->
+
+
+					</div>
+					<hr />
+					<b>or sign up with</b>
+
+
+					<form id="signUpForm" class="cmxform" role="form">
+						<div class="form-group">
+							<input type="text" class="form-control first-child required"
+								id="name" name="name" value="" placeholder="Name" />
+
+						</div>
+						<sup class="manadatory fa fa-asterisk"></sup>
+						<div class="form-group">
+							<input type="text" class="form-control required" id="username"
+								name="userName" value="" placeholder="Username" />
+
+						</div>
+						<sup class="manadatory fa fa-asterisk"></sup>
+						<div class="form-group">
+							<input type="text" class="form-control required" id="email"
+								name="email" value="" placeholder="example@gmail.com" />
+
+						</div>
+						<sup class="manadatory fa fa-asterisk"></sup>
+						<div class="form-group">
+							<input type="password" class="form-control required"
+								id="password" name="password" value="" placeholder="Password" />
+
+						</div>
+						<sup class="manadatory fa fa-asterisk"></sup>
+						<div class="form-group">
+							<input type="password" class="form-control last-child required"
+								id="repeatPassword" value="" placeholder="Repeat Password" />
+
+
+						</div>
+						<sup class="manadatory fa fa-asterisk"></sup>
+						<div class="form-group">
+							<div class="g-recaptcha captcha" id="signUpRecaptcha"></div>
+						</div>
+
+						<div class="form-group">
+
+							<a href="#" class="pull-left" id="signInBtnInSignUp">Already
+								have an account? <span class="text-danger">Sign In</span>
+							</a> <a href="#" class="pull-right forgotPassword"
+								id="forgotPasswordInSignUp">Forgot password?</a>
+
+						</div>
+
+
+
+						<button type="button" id="signUp"
+							class="btn btn-success btn-block">Sign Up</button>
+
+					</form>
+
+
+
+				</div>
+
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+
+	<!-- modal for forgot password -->
+	<div class="modal fade reglogin" role="dialog" id="forgotPasswordModal"
+		style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close" id="closeForgotPasswordModal">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">FORGOT PASSWORD</h4>
+				</div>
+				<div class="modal-body" style="text-align: center">
+
+
+					<form id="forgotPasswordForm" class="cmxform" role="form">
+						<div class="form-group">
+							<label for="email" class="control-label">EMAIL ADDRESS<sup
+								class="manadatory fa fa-asterisk"></sup>
+							</label> <input type="text" class="form-control email required"
+								id="email" name="email" value="" placeholder="example@gmail.com" />
+
+						</div>
+
+
+
+						<button type="button" id="forgotPassword"
+							class="btn btn-success btn-block">SEND RESET PASSWORD
+							LINK</button>
+
+					</form>
+
+
+
+				</div>
+
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+
+
+	<!-- end -->
+</nav>
+
+
+
+<head th:fragment="metaheader">
+
+<meta th:if="${conference} != null and ${conference.id} > 0">
+<meta property="og:title"
+	th:content="${conference.title} + ' is on ' + ${#dates.format(conference.startDateTime,'MMM d yyyy')} +' at ' +${conference.city.name} " />
+<meta property="og:type" th:content="${conference.urlKeyword}" />
+<meta property="og:url" th:content="${conference.url}" />
+<meta property="og:image" th:if="${conference.backGroundImage}"
+	th:content="${urls.cfUrl} + ${conference.backGroundImage.path}" />
+<meta property="og:image:width" content="450" />
+<meta property="og:image:height" content="298" />
+<meta property="og:description" th:content="${conference.about}" />
+<meta property="og:site_name" content="Omics Conference" />
+
+</meta>
+
+<meta name="keywords"
+	th:content="${conferenceSEOKeywords} ? (${conferenceSEOKeywords.metaKeywords} ? ${conferenceSEOKeywords.metaKeywords}:''):''"></meta>
+<meta name="description"
+	th:content="${conferenceSEOKeywords} ? (${conferenceSEOKeywords.metaDescription} ? ${conferenceSEOKeywords.metaDescription}:''):''"></meta>
+<title
+	th:text="${conferenceSEOKeywords} ? (${conferenceSEOKeywords.title} ? ${conferenceSEOKeywords.title}:''):''"></title>
+
+
+</head>
+
+<div class="navigation navbar-collapse collapse whiteBg"
+	th:fragment="conferenceheader(register)">
+	<div class="container-fluid">
+		<div data-example-id="carousel-with-captions"
+			class="bs-example topBanner conferencePgBanner">
+			<div data-ride="carousel" class="carousel slide"
+				id="carousel-example-captions">
+				<!-- <ol class="carousel-indicators">
+						<li class="active" data-slide-to="0"
+							data-target="#carousel-example-captions"></li>
+					</ol> -->
+				<div role="listbox" class="carousel-inner">
+					<div class="item active">
+						<img alt="" data-src="holder.js/900x500/auto/#777:#777"
+							th:if="${conference.backGroundImage}"
+							th:src="${urls.cfUrl} + ${conference.backGroundImage.path}"
+							data-holder-rendered="true" class="img-responsive" />
+						<div class="carousel-caption">
+							<div class="pull-left col-md-8">
+								<span class="name pull-left" th:text="${conference.preTitle}">Conference
+									Pre Title</span> <span th:text="${conference.title}"
+									class="numText pull-left">Conference Title</span> <span
+									class="datevenue pull-left location"
+									th:if="${conference.location}" th:text="${conference.location}">Conference
+									location</span>
+								<!-- <span class="datevenue pull-left"
+									th:if="${conference.city}" th:text="${conference.city.name}">,Conference
+									city</span> <span class="datevenue pull-left"
+									th:if="${conference.state}" th:text="', '+${conference.state.name}">Conference
+									state</span> <span class="datevenue pull-left"
+									th:if="${conference.country}"
+									th:text="', '+${conference.country.name}">Conference country</span> -->
+								<!-- <span class="datevenue dateTime"
+										th:text="${#calendars.format(conference.startDateTime,'MMMMM dd,YYYY')} + ' to ' + ${#calendars.format(conference.endDateTime,'MMMMM dd,YYYY')}"></span> -->
+								 <div th:if="${conference.convertedDateIntoString} and ${#strings.length(conference.convertedDateIntoString)} gt 0">
+								<span class="datevenue dateTime" th:text="${conference.convertedDateIntoString}"></span>
+								</div>
+
+								<div class="clearfix"></div>
+								
+								<th th:if="${register}"  class="btn btn-default pull-left">
+								<a href="#" class="btn btn-default pull-left"
+									th:href="${conferenceBaseURL}">
+									Back to Conference</a>
+								
+								</th>
+								
+								<th th:if="${conferenceSettings.showOrganizingCommittee}==true">
+								<th  class="btn btn-default pull-left">
+									<a class="btn btn-warning pull-left"
+									th:href="${conferenceBaseURL}+'/organizing-committee'">Organizing Committee</a>
+								</th>
+								</th>
+								
+								<th th:if="${conferenceSettings.enableAbstractSubmission}==true">
+								<th th:unless="${past}" class="btn btn-default pull-left">
+									<a class="btn btn-warning pull-left"
+									th:href="${conferenceBaseURL}+'/abstract-submission'">Submit Abstract</a>
+								</th>
+								</th>
+								
+								<th th:if="${conferenceSettings.enableRegistration}==true and ${!register}">
+								<th th:if="${isTicketAvailable}">
+								<th th:unless="${past}" class="btn btn-default pull-left">
+									<a class="btn btn-warning pull-left"
+									th:href="${conferenceBaseURL}+'/registration'">Register
+										for the Conference</a>
+								</th>
+								</th>
+								</th>
+								
+								<!--  1 - initialannouncement, 2 - tentativeprogram, 3 - finalprogram,  -->
+							<div th:if="${scientificProgramPDF != null} and ${conferenceSettings.showScientificProgram}==true">
+							
+							<a 	class="btn btn-warning pull-left"
+											th:with="fileId=${scientificProgramPDF.fileId}" th:href="${omicsBaseURL}+ '/downloadFile?fileId='+${fileId}">
+												<i class="fa fa-file"></i> <span
+												>Scientific Program</span>
+										</a>
+								
+								</div>
+							 <div th:if="${conferenceDownload != null} and ${conferenceSettings.showScientificProgram}==true">
+									<div th:if="${conferenceDownload.fileId != null and conferenceDownload.fileId > 0}">
+										<th class="btn btn-warning pull-left">
+										<a  th:if="${conferenceDownload.type}==3"
+											class="btn btn-warning pull-left"
+											th:with="fileId=${conferenceDownload.fileId}" th:href="${omicsBaseURL}+ '/downloadFile?fileId='+${fileId}">
+												<i class="fa fa-file"></i> <span
+												>Final Program</span>
+										</a>
+										<a th:unless="${conferenceDownload.type}==3" th:if="${conferenceDownload.type}==2"
+											class="btn btn-warning pull-left"
+											th:with="fileId=${conferenceDownload.fileId}" th:href="${omicsBaseURL}+ '/downloadFile?fileId='+${fileId}">
+												<i class="fa fa-file"></i> <span
+												>Tentative Program</span>
+										</a>
+										<a th:unless="${conferenceDownload.type}==2" th:if="${conferenceDownload.type}==1"
+											class="btn btn-warning pull-left"
+											th:with="fileId=${conferenceDownload.fileId}" th:href="${omicsBaseURL}+ '/downloadFile?fileId='+${fileId}">
+												<i class="fa fa-file"></i> <span
+												>Innitial Announcement</span>
+										</a>
+										</th>
+									</div>
+								</div>
+								
+							
+							
+							
+								
+								
+								
+								
+								
+								
+								
+<!--								<div th:if="${not #lists.isEmpty(conferenceDownloads)}"
+									th:each="download : ${conferenceDownloads}"
+									th:switch="${download.type}">
+									<th th:case="3" class="btn btn-warning pull-left"><a
+										class="btn btn-warning pull-left"
+										th:href="@{/downloadFile(fileId=${download.fileId})}"><i
+											class="fa fa-file"></i>Final Program</a></th>
+									<th th:case="2" class="btn btn-warning pull-left"><a
+										class="btn btn-warning pull-left"
+										th:href="@{/downloadFile(fileId=${download.fileId})}"><i
+											class="fa fa-file"></i>Tentative Program</a></th>
+									<th th:case="1" class="btn btn-warning pull-left"><a
+										class="btn btn-warning pull-left"
+										th:href="@{/downloadFile(fileId=${download.fileId})}"><i
+											class="fa fa-file"></i>Initial Announcement</a></th>
+								</div>-->
+                                   <!-- <div
+										th:if="${conferenceDownload != null}">
+										<div
+											th:if="${conferenceDownload.fileId != null and conferenceDownload.fileId > 0}">
+											<th class="btn btn-warning pull-left"><a
+												class="btn btn-warning pull-left"
+												th:href="@{/downloadFile(fileId=${conferenceDownload.fileId})}">
+													<i class="fa fa-file"></i> <span
+													th:text="${conferenceDownload.typeName}"></span>
+											</a></th>
+										</div>
+									</div> -->
+								</div>
+
+							<div class="pull-left col-md-3 contactDesk">
+								<th th:if="${conferenceContacts}">
+									<h4>
+										<b>Contact Desk</b>
+									</h4>
+									<p class="pull-left"
+										th:if="${conferenceContacts.addressLine1} and ${#strings.length(conferenceContacts.addressLine1)} gt 0"
+										th:text="'Address: '+${conferenceContacts.addressLine1}">address1</p>
+									<p class="displayBlock"
+										th:if="${conferenceContacts.phone1} and ${#strings.length(conferenceContacts.phone1)} gt 0"
+										th:text="'Tel: '+${conferenceContacts.phone1}">phone1</p>
+									<p class="pull-left"
+										th:if="${conferenceContacts.addressLine2} and ${#strings.length(conferenceContacts.addressLine2)} gt 0"
+										th:text="'Address: '+${conferenceContacts.addressLine2}">address2</p>
+									<p class="displayBlock"
+										th:if="${conferenceContacts.phone2} and ${#strings.length(conferenceContacts.phone2)} gt 0"
+										th:text="'Tel: '+${conferenceContacts.phone2}">phone2</p>
+									<p class="pull-left"
+										th:if="${conferenceContacts.addressLine3} and ${#strings.length(conferenceContacts.addressLine3)} gt 0"
+										th:text="'Address: '+${conferenceContacts.addressLine3}">address</p>
+									<p class="displayBlock"
+										th:if="${conferenceContacts.phone3} and ${#strings.length(conferenceContacts.phone3)} gt 0"
+										th:text="'Tel: '+${conferenceContacts.phone3}">phone3</p>
+									<p class="displayBlock"
+										th:if="${conferenceContacts.fax} and ${#strings.length(conferenceContacts.fax)} gt 0"
+										th:text="'Fax: '+${conferenceContacts.fax}">fax</p>
+									<p class="displayBlock"
+										th:if="${conferenceContacts.tollfree} and ${#strings.length(conferenceContacts.tollfree)} gt 0"
+										th:text="'Toll free: '+${conferenceContacts.tollfree}">toll
+										free</p>
+								</th>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 1 - initialannouncement, 2 - tentativeprogram, 3 - finalprogram, 
+		 * 4 -conferenceguide, 5 - sponsorshipbrochure, 6 - conferencebrochure, 7 -
+		 * exhibitorpdf. -->
+	</div>
+
+
+	<div class="share dropdown pull-left">
+		<i class="fa fa-share-alt"></i><a class="sharetext dropdown-toggle"
+			href="#" id="dropicons" data-toggle="dropdown" role="button"
+			aria-haspopup="true" aria-expanded="false">Share</a>
+		<ul class="dropdown-menu" aria-labelledby="dropicons">
+			<li>
+				<div id="shareDiv pull-left">
+
+					<span class='st_facebook_large' displayText='Facebook'></span> <span
+						class='st_twitter_large' displayText='Tweet' st_via='OMICS'></span>
+					<span class='st_linkedin_large' displayText='LinkedIn'></span> <span
+						class='st_pinterest_large' displayText='Pinterest'></span> <span
+						class='st_email_large' displayText='Email'></span> <span
+						class='st_sharethis_large' displayText='ShareThis'></span>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<!-- AddToAny BEGIN -->
+
+
+	<div class="container ">
+		<input type="hidden" id="theConferenceId" th:value="${conference.id}" />
+		<ul class="nav_ul">
+			<li th:if="${conference.startDateTime}"><a href="#"
+				th:href="${conferenceBaseURL}"><i
+					class="fa fa-home"></i></a></li>
+					
+					
+					<!--<th th:if="${conferenceSettings.enableAbstractSubmission}==true">
+								<th th:unless="${past}" >
+									<li><a href="#"
+								th:href="@{/wu/Conference/abstractSubmission/{id}(id=${conference.id})}"
+								>Abstract Submission</a></li>
+								</th>
+								</th>   -->
+			<li><a href="#" th:href="${conferenceBaseURL}+'/about-conference'">About</a></li>	
+
+			<li class="dropdown"><a id="drop1" href="#"
+				class="dropdown-toggle" data-toggle="dropdown" role="button"
+				aria-haspopup="true" aria-expanded="false"> Technical Program <span
+					class="caret"></span>
+			</a>
+				<ul class="dropdown-menu" aria-labelledby="drop1">
+					<!-- <th th:if="${conferenceSettings.showScientificProgram}"
+						class="col-md-12">
+						<li><a href="#"
+							th:href="@{/wu/ScientificProgram/{id}(id=${conference.id})}"
+							>Scientific Program </a></li>
+					</th> -->
+					<th class="col-md-12"
+						th:if="${conferenceSettings.enablePosterSubmission}">
+						<li><a href="#"
+							th:href="${conferenceBaseURL}+'/call-for-abstracts'">Call for
+								Abstracts </a></li>
+					</th>
+					<th class="col-md-12"
+						th:if="${conferenceSettings.showScientificProgram}">
+						<li><a href="#"
+							th:href="${conferenceBaseURL}+'scientific-program'">Scientific
+								Program </a></li>
+					</th>
+
+
+
+
+
+					<th class="col-md-12">
+						<li><a th:href="${conferenceBaseURL}+'/poster-presentation'">Poster
+								Presentation </a></li>
+					</th>
+
+
+					<th class="col-md-12">
+						<li><a
+								th:href="${conferenceBaseURL}+'/eposter-presentation'"> ePoster
+								Presentation </a></li>
+					</th>
+					<!-- <th 
+							class="col-md-12">
+							<li><a href="#"
+								th:href="@{/wu/Conference/abstractSubmission/{id}(id=${conference.id})}"
+								>Abstract Submission</a></li>
+						</th> -->
+
+				</ul></li>
+
+
+			<li class="dropdown"><a id="drop1" href="#"
+				class="dropdown-toggle" data-toggle="dropdown" role="button"
+				aria-haspopup="true" aria-expanded="false"> Partners <span class="caret"></span>
+			</a>
+				<ul class="dropdown-menu" aria-labelledby="drop1">
+					<li><a th:href="${conferenceBaseURL}+'/sponsors'">Sponsors</a></li>
+					<li><a th:href="${conferenceBaseURL}+'/our-supporters'" target="_blank">Our Supporters</a></li>
+					<li><a th:href="${urls.sponsorsYearWise}" target="_blank">Media partners</a></li>
+					
+				</ul></li>
+			
+				<li class="dropdown"><a id="drop1" href="#"
+					class="dropdown-toggle" data-toggle="dropdown" role="button"
+					aria-haspopup="true" aria-expanded="false"> Awards <span
+						class="caret"></span>
+				</a>
+					<ul class="dropdown-menu" aria-labelledby="drop1">
+						<th class="col-md-12"  th:if="${conferenceSettings.enablePosterSubmission}">
+							<li><a href="#"
+							th:href="${conferenceBaseURL}+'/poster-submission'">Best
+									Poster Awards</a></li>
+						</th>
+						<th th:if="${conferenceSettings.enableAbstractSubmission}==true">
+								<th th:unless="${past}">
+						<th class="col-md-12">
+							<li><a th:href="${conferenceBaseURL}+'/young-researchers-forum'">Young
+									Researchers Forum</a></li>
+						</th></th></th>
+
+
+					</ul></li>
+			
+			
+			<!-- <li th:if="${isConferenceBrochureDownloadEnabled}"><a href="#"
+				th:href="@{/wu/conferenceBrochureDownload/{id}(id=${conference.id})}">Brochure
+					Download </a></li> -->
+					
+					<th th:if="${past}">
+			<li class="dropdown"><a id="drop1" href="#"
+				class="dropdown-toggle" data-toggle="dropdown" role="button"
+				aria-haspopup="true" aria-expanded="false"> Gallery <span
+					class="caret"></span>
+			</a>
+				<ul class="dropdown-menu" aria-labelledby="drop1">
+					<li><a href="#"
+						th:href="${conferenceBaseURL}+'/images'">Image</a></li>
+					<li><a href="#"
+						th:href="${conferenceBaseURL}+'/videos'">Video</a></li>
+
+				</ul></li> </th>
+			<li><a href="#"
+				th:href="${conferenceBaseURL}+'/venue-and-hospitality'">Venue
+					&amp; Hospitality</a></li>
+			
+			<li class="dropdown"><a id="drop1" href="#"
+				class="dropdown-toggle" data-toggle="dropdown" role="button"
+				aria-haspopup="true" aria-expanded="false"> More <span
+					class="caret"></span>
+			</a>
+				<ul class="dropdown-menu" aria-labelledby="drop1">
+					<li th:if="${conferenceSettings.enableTermsAndCondition}==true"><a href="#"
+						th:href="${conferenceBaseURL}+'/terms-and-conditions'">Terms
+							and Conditions</a></li>
+					<li><a href="#"
+						th:href="${conferenceBaseURL}+'/faq'">Speaker
+							Guidelines and FAQ </a></li>
+							
+					<li><a href="#"
+						th:href="${conferenceBaseURL}+'/faq'">B2B </a></li>
+							
+					<li><a href="#"
+						th:href="${conferenceBaseURL}+'/faq'">Experts Out Look </a></li>
+
+				</ul></li>
+				
+				<li><a href="#"
+				th:href="${conferenceBaseURL}+'/help-desk'">Help
+					Desk</a></li>
+
+		</ul>
+	</div>
+</div>
+
+<head th:fragment="scriptAndCSS">
+<!-- <link rel="icon" 
+      type="image/png" th:href="@{/resources/img/logo.png}" ></link> -->
+
+<link rel="shortcut icon" th:href="@{/resources/img/favicon.png}"></link>
+<link rel="apple-touch-icon-precomposed" sizes="144x144"
+	th:href="@{/resources/img/apple-touch-icon-144-precomposed.png}"></link>
+<link rel="apple-touch-icon-precomposed" sizes="114x114"
+	th:href="@{/resources/img/apple-touch-icon-114-precomposed.png}"></link>
+<link rel="apple-touch-icon-precomposed" sizes="72x72"
+	th:href="@{/resources/img/apple-touch-icon-72-precomposed.png}"></link>
+<link rel="apple-touch-icon-precomposed" sizes="57x57"
+	th:href="@{/resources/img/apple-touch-icon-57-precomposed.png}"></link>
+
+<script th:src="@{/resources/js/lib/jquery.js}"></script>
+<script th:src="@{/resources/js/lib/bootstrap.min.js}"></script>
+<link th:href="@{/resources/css/lib/bootstrap.css}" rel="stylesheet"
+	media="screen"></link>
+<link th:href="@{/resources/fonts/font-awesome.min.css}"
+	rel="stylesheet"></link>
+<link th:href="@{/resources/css/lib/flag-icon.min.css}" rel="stylesheet"></link>
+<link th:href="@{/resources/css/custom.css}" rel="stylesheet"
+	media="screen"></link>
+<!-- oLoader -->
+<script th:src="@{/resources/js/lib/oLoader/js/jquery.oLoader.js}"></script>
+<script th:src="@{/resources/js/RequestManager.js}"></script>
+<script th:src="@{/resources/js/lib/jquery.form.js}"
+	type="text/javascript"></script>
+<script th:src="@{/resources/uploader/uploader.js}"
+	type="text/javascript"></script>
+<link th:href="@{/resources/css/lib/select2.css}" rel="stylesheet" />
+<link th:href="@{/resources/css/select2customized.css}" rel="stylesheet"
+	media="screen" />
+<link th:href="@{/resources/css/lib/bootstrap-select.min.css}"
+	rel="stylesheet" media="screen" />
+<link th:href="@{/resources/css/ConferencePage.css}" rel="stylesheet"
+	media="screen" />
+<!-- Select2 Tyeahead -->
+<script th:src="@{/resources/js/lib/select2.min.js}"></script>
+<!-- Jquery Validator -->
+<script th:src="@{/resources/js/lib/jquery.validate.min.js}"></script>
+<link th:href="@{/resources/css/lib/cmxform.css}" rel="stylesheet" />
+<!-- Notifications JS -->
+<script th:src="@{/resources/js/lib/alertify/alertify.js}"></script>
+<script th:src="@{/resources/js/lib/alertify/alertify-custom.js}"></script>
+
+<!-- Alertify CSS -->
+<link th:href="@{/resources/css/lib/alertify/alertify.core.css}"
+	rel="stylesheet" />
+<link th:href="@{/resources/css/lib/alertify/alertify.default.css}"
+	rel="stylesheet" />
+<link th:href="@{/resources/css/lib/styles.css}" rel="stylesheet"
+	media="screen"></link>
+<link th:href="@{/resources/css/lib/custom-ui.css}" rel="stylesheet"
+	media="screen"></link>
+<link th:href="@{/resources/css/lib/radiocheck.css}" rel="stylesheet"
+	media="screen"></link>
+<link
+	href='https://fonts.googleapis.com/css?family=Alegreya+Sans:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,800,800italic,900,900italic'
+	rel='stylesheet' type='text/css' />
+<link
+	href='https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,800,800italic,900,900italic'
+	rel='stylesheet' type='text/css' />
+<script type="text/javascript"
+	th:src="@{/resources/js/lib/galleriffic/jquery.galleriffic.js}"></script>
+
+<!-- Optionally include jquery.history.js for history support -->
+<script type="text/javascript"
+	th:src="@{/resources/js/lib/galleriffic/jquery.history.js}"></script>
+<script type="text/javascript"
+	th:src="@{/resources/js/lib/galleriffic/jquery.opacityrollover.js}"></script>
+<script type="text/javascript"
+	th:src="@{/resources/js/lib/galleriffic/responsiveTabs.js}"></script>
+<script
+	th:src="@{/resources/js/lib/TwitterPagination/jquery.twbsPagination.js}"></script>
+<script th:src="@{/resources/js/lib/moment.js}"></script>
+<script th:src="@{/resources/js/lib/bootstrap-select.js}"></script>
+
+<script th:src="@{/resources/js/website/Subscribe.js}"></script>
+<script th:src="@{/resources/js/lib/jquery.cookie.js}"></script>
+<script th:src="@{/resources/js/header.js}"></script>
+<script th:src="@{/resources/js/App.js}"></script>
+<script src="https://apis.google.com/js/platform.js" async="" defer=""></script>
+
+<script src="https://apis.google.com/js/api:client.js"></script>
+
+<script
+	src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&amp;render=explicit"
+	th:src="@{https://www.google.com/recaptcha/api.js(onload=onloadCallback,render='explicit')}"
+	async="" defer=""></script>
+
+
+<script type="text/javascript"
+	src="http://w.sharethis.com/button/buttons.js"></script>
+
+<!-- 		<link th:href="@{/resources/css/custom.css}" rel="stylesheet" media="screen"></link> -->
+<!--intl-tel-input pluggin -->
+<link rel="stylesheet"
+	th:href="@{/resources/js/lib/intl-tel/css/intlTelInput.css}" />
+<script th:src="@{/resources/js/lib/intl-tel/js/intlTelInput.min.js}"></script>
+<script th:inline="javascript">
+   /*<![CDATA[*/
+   onloadCallback = function(){
+		//var universityPaginator = "6LfnqRATAAAAAIdgBkh6fxz8pGVc7p-IIu3HI6Z5";
+	   var siteKey = [[${recaptchaPublicKey}]];
+		console.log(siteKey);
+		
+		if ($("#signUpRecaptcha").length) {
+			recaptcha1 = grecaptcha.render('signUpRecaptcha', {
+				'sitekey' : siteKey
+			});
+		}
+
+		if ($("#recaptchaDiv").length) {
+			recaptcha2 = grecaptcha.render('recaptchaDiv', {
+				'sitekey' : siteKey
+			});
+		}
+
+		
+		/* grecaptcha.render('signUpRecaptcha', {'sitekey' : universityPaginator});
+	    grecaptcha.render('abstractSubmissionRecaptcha', {'sitekey' : universityPaginator});
+	    grecaptcha.render('yrfRecaptcha', {'sitekey' : universityPaginator}); */
+	    
+		
+	}
+   /*]]>*/
+   </script>
+
+<script th:inline="javascript">  
+	$(document).ready(
+			function() {
+				/* 	// Start : user dashboard menu highlight //
+					$('.leftMenu li a').removeClass('active');
+					//Get the last word in the URL and highlight it
+					var currentUrl = window.location.href;
+					var lastSegment = currentUrl.slice(currentUrl.lastIndexOf("/") + 1);
+					$("."+lastSegment).addClass('active');
+					// End : user dashboard menu highlight //	 */
+					
+					  (function(d, s, id) {
+						    var js, fjs = d.getElementsByTagName(s)[0];
+						    if (d.getElementById(id)) return;
+						    js = d.createElement(s); js.id = id;
+						    js.src = "https://connect.facebook.net/en_US/sdk.js";
+						    fjs.parentNode.insertBefore(js, fjs);
+						  }(document, 'script', 'facebook-jssdk'));
+					  
+					  RequestManager.getFbAppId({},function(data, status){
+							if(status){
+								//App.googlePlusAppId = data.token;
+								//self.initGooglePlusClient(data.token);		
+								
+								window.fbAsyncInit = function() {
+									  FB.init({
+									    //appId      : '769746706464994',
+									    appId  : data.token,
+									    cookie     : true,  // enable cookies to allow the server to access 
+									                        // the session
+									    xfbml      : true,  // parse social plugins on this page
+									    version    : 'v2.2' // use version 2.2
+									  });
+								};
+							}
+						});
+					  
+					  
+				 stLight.options({
+		                publisher:'cd4e560e-30ee-411c-8ffc-1ae61720e4aa',shorten:false,
+		        });
+				new Header();
+				$(".nav_ul a").each(function(){
+					var nav_ul_a_href = $(this).attr('href');
+					if(window.location.href.indexOf(nav_ul_a_href) > -1) {
+				       //alert("your url contains the name : "+nav_ul_a_href);
+				       $(this).css({"color":"#3fb1e7"});
+				       
+				       if($(this).parent().parent().hasClass('dropdown-menu')){
+				    	   $(this).parent().parent().parent().find('#drop1').css({"color":"#3fb1e7"});
+				       }
+				    }	
+				});
+			});
+	
+
+</script>
+
+
+
+
+</head>
+
+
+<th th:fragment="UserProfileHeader">
+	<link rel="stylesheet" th:href="@{/resources/css/UserProfile.css}" />
+	<ul class="nav nav-pills nav-stacked navbar-collapse collapse leftMenu">
+		<li><a role="presentation" class="profile" href="#"
+			th:href="${omicsBaseURL}+'/user/dashboard'"><i class="fa fa-edit"></i> Personal
+				Details</a></li>
+		<!-- <li><a href="#" th:href="@{/User/profile/conferencesAttended}" role="presentation"><i class="fa fa-group"></i> My Conferences</a></li> -->
+		<li><a class="transactionHistory" href="#"
+			th:href="${omicsBaseURL}+'/user/conferences-attended'" role="presentation"><i
+				class="fa fa-group"></i> My Conferences</a></li>
+		<li><a class="abstractsSubmitted" role="presentation" href="#"
+			th:href="${omicsBaseURL}+'/user/abstracts-submitted'"><i
+				class="fa fa-spinner"></i> Abstracts</a></li>
+		<li><a class="postersSubmitted" href="#"
+			th:href="${omicsBaseURL}+'/user/posters-submitted'" role="presentation"><i
+				class="fa fa-file-image-o"></i> Posters/ePosters</a></li>
+		<li><a class="certificates" role="presentation" href="#"
+			th:href="${omicsBaseURL}+'/user/certificates'"><i
+				class="fa fa-certificate"></i> Certificates</a></li>
+		<li><a class="feedbacks" role="presentation" href="#"
+			th:href="${omicsBaseURL}+'/user/feedbacks'"><i class="fa fa-wechat"></i>
+				Feedbacks</a></li>
+		<li><a class="comments" role="presentation" href="#"
+			th:href="${omicsBaseURL}+'/user/comments'"><i class="fa fa-comments"></i>
+				Comments</a></li>
+		<li th:if="${userProfile.type}==2"><a class="videos"
+			role="presentation" href="#" th:href="${omicsBaseURL}+'/user/videos'"><i
+				class="fa fa-play"></i> Videos</a></li>
+		<li><a class="reminders" role="presentation" href="#"
+			th:href="${omicsBaseURL}+'/user/reminders'"><i class="fa fa-clock-o"></i>
+				Reminders</a></li>
+		<li><a class="subscriptions" role="presentation" href="#"
+			th:href="${omicsBaseURL}+'/user/subscriptions'"><i class="fa fa-check"></i>
+				Subscriptions</a></li>
+		<!-- 			<li><a href="#" th:href="@{/User/profile/transactionHistory}" role="presentation">My Transactions</a></li> -->
+		<li><a class="changePassword" href="#"
+			th:href="${omicsBaseURL}+'/user/change-password'"><i
+				class="fa fa-exchange"></i>Change Password</a></li>
+		<!-- 			<li><a role="presentation" href="#" th:href="@{/member/logout}"><i class="fa fa-unlock-alt"></i> Logout</a></li>	 -->
+		<li><a role="presentation" href="#" id="logout"><i
+				class="fa fa-sign-out text-danger"></i> Logout</a></li>
+		<!-- 			<li><a href="#" th:href="@{/User/profile/preferences}" role="presentation">Preferences</a></li>
+			<li><a href="#" th:href="@{/User/profile/innovations}" role="presentation">Innovations/Interests</a></li>	 -->
+		<!-- 			<li class="dropdown"><a href="#" class="dropdown-toggle"
+				data-toggle="dropdown" role="button" aria-haspopup="true"
+				aria-expanded="false">More <span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="#"
+						th:href="@{/User/profile/conferencesAttended}">My Conferences</a></li>
+					<li><a href="#" th:href="@{/User/profile/postersSubmitted}">Posters/ePosters</a></li>
+					<li><a href="#"
+						th:href="@{/User/profile/transactionHistory}">My Transactions</a></li>
+					<li><a href="#" th:href="@{/User/profile/changePassword}">Change
+							Password</a></li>
+					<li><a href="#" th:href="@{/User/profile/preferences}">Preferences</a></li>
+					<li><a href="#" th:href="@{/User/profile/innovations}">Innovations/Interests</a></li>
+				</ul></li> -->
+
+	</ul>
+</th>

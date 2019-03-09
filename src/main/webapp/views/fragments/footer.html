@@ -1,0 +1,525 @@
+<div th:fragment="footer" class="col-md-6 text-center whiteColor">Copyright &copy; <span th:text="${currentYear}+'-'+${currentYear+1}"> </span>
+<th th:if="${not #lists.isEmpty(omicsSocialMediaLinks)}">
+<th th:each="link : ${omicsSocialMediaLinks}">
+<th  th:if="${link.type == 'OMICS LINK'}">
+<a target="_blank" th:if="${link.value} and ${#strings.length(link.value)} gt 0"
+			th:href="${link.value}">OMICS International,</a>
+</th></th></th><span class="footerBluecolor">OMICS International,</span> All Rights Reserved.</div>
+
+<!-- country footer -->
+<div th:fragment="countryfooter" class="row footerList">
+
+	<div class="col-md-12">
+		<h3 class="text-center">
+			<strong>OMICS International Conferences</strong>
+		</h3>
+
+
+		<div class="row">
+			<div class="col-md-4">
+				<h4 class="text-center">
+					<strong>By Country</strong>
+				</h4>
+
+				<div th:if="${not #lists.isEmpty(countryAndCities)}"
+					class="col-md-12">
+					<div th:each="country : ${countryAndCities}" class="col-md-4">
+						<ul class="navhead">
+						<li class="countryHead">
+							<span th:class="'flag-icon flag-icon-' + ${country.flagClass}"></span>
+							<a th:with="name=${country.urlKeyword}" th:href="${omicsBaseURL}+ '/countries/'+${name}" th:text="${country.name}" target="_blank">Country Name</a>
+						<!-- <ul class="navsub">			
+						<li th:if="${not #lists.isEmpty(country.cities)}">
+							<li th:each="city : ${country.cities}">
+								<a th:href="@{/pattern/{name}(name=${city.urlPattern})}" class="cityName" th:text="${city.name}">City Name</a>
+							</li>
+						</li>
+						</ul> -->	
+						</li>
+						</ul>
+
+					</div>
+
+				</div>
+
+
+			</div>
+			<div class="col-md-8 subjectHeight">
+			<div class="row">
+				<h4 class="text-center col-md-12">
+					<strong>By Subject</strong>
+				</h4>
+			</div>
+			<!-- <div class="row"> -->
+			<!-- 	<div class="col-md-12"> -->
+				<!-- <ul class="navhead"> -->
+				<div class="col-md-12 subjectList" th:if="${not #lists.isEmpty(subjectListByCategory)}">
+			<!-- 	<div class="row">
+				<div>
+					<li class="col-md-6" th:each="subject : ${subjects}" th:if="${subjectStat.count le #lists.size(subjects)/2}">
+						<a class="subjectHead" th:href="@{/wu/subject/{name}(name=${subject.name})}" th:text="${subject.name}" target="_blank">Subject Name</a>
+					</li>
+					</div>
+					<div >
+					<li class="col-md-6" th:each="subject : ${subjects}" th:if="${subjectStat.count gt #lists.size(subjects)/2}">
+						<a class="subjectHead" th:href="@{/wu/subject/{name}(name=${subject.name})}" th:text="${subject.name}" target="_blank">Subject Name</a>
+					</li>
+					</div>
+				</div> -->
+				<div class="col-md-4"  th:if="${not #lists.isEmpty(subjectCategory.subjectList)}" th:each="subjectCategory : ${subjectListByCategory}">
+			<strong><div  th:text="${subjectCategory.name}"></div></strong>
+					<div th:if="${not #lists.isEmpty(subjectCategory.subjectList)}">
+								<div th:each="subject : ${subjectCategory.subjectList}" >
+					<ul >
+					<li ><a th:with="name=${subject.urlKeyword}" th:href="${omicsBaseURL}+ '/subjects/'+${name}" 
+					class="subjectHead" th:text="${subject.name}" target="_blank">Subject Name</a></li>
+					</ul>
+					</div></div>
+				</div>
+				</div>
+			<!-- 	</ul> -->
+			<!-- </div> -->
+		<!-- 	</div> -->
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<!-- Contacts footer -->
+<div th:fragment="contactsfooter(conferencePage)" class="row">
+	<div class="footerList2" th:if="${conferencePage}">
+					<div class="row">
+				<div class="col-md-4">
+				<h4><strong>Mail us at</strong></h4>
+				<div class="emailText">Drop us an email for Program enquiry</div>
+				<a class="mailContact" th:text="${conferenceContacts.contactEmail1}" th:attr="href='mailto:'+${conferenceContacts.contactEmail1}">email1</a>	
+				<div class="emailText">Sponsors/&nbsp;Exhibiting/&nbsp;Advertising</div>
+				<a class="mailContact"  th:text="${conferenceContacts.contactEmail2}" th:attr="href='mailto:'+${conferenceContacts.contactEmail2}">email2</a>
+				<div class="emailText">General Queries</div>
+				<a class="mailContact"  th:text="${conferenceContacts.contactEmail3}" th:attr="href='mailto:'+${conferenceContacts.contactEmail3}">emai3</a>		    
+				</div>
+				
+				<div class="col-md-4 support">
+			<h4><strong>Be a member and support us</strong></h4>
+			<ul>
+				<li><a th:href="${conferenceBaseURL}+'/join-our-mailing-list'"
+					title="Click for more information">Join Our
+						Mailing List</a></li>
+				<li><a th:href="${conferenceBaseURL}+'/suggest-speaker'"
+					 title="Click for more information">Suggest A
+						Speaker</a></li>
+				<li><a th:href="${conferenceBaseURL}+'/suggest-ideas'"
+					title="Click for more information">Suggestions</a></li>
+				<li><a th:href="${conferenceBaseURL}+'/invite-proposals'"
+					title="Click for more information">Invite
+						Proposals</a></li>
+			</ul>
+		</div>
+          <div th:if="${conferenceSettings.enableTermsAndCondition}" class="col-md-4 hide">
+          
+			<div class="row" th:if="${conferenceSettings.termsAndCondition} and ${#strings.length(conferenceSettings.termsAndCondition)} gt 0">
+			<h4><strong>Terms and Conditions</strong></h4>
+			<div th:utext="${conferenceSettings.termsAndCondition}" class="col-md-12">Terms and Conditions</div>
+			</div>
+			</div>
+			<div th:if="${previousConference}" class="col-md-4">
+			<h4><strong>Highlights from last year's Convention</strong></h4>
+			<ul>
+				<li><a th:with="year=${#dates.year(previousConference.startDateTime)},name=${previousConference.urlKeyword}" th:href="${omicsBaseURL}+ '/'+${year}+'/'+${name}" 
+					target="" title="Click for more information">View Past Conference Report</a></li>
+				<li><a th:with="year=${#dates.year(previousConference.startDateTime)},name=${previousConference.urlKeyword}" th:href="${omicsBaseURL}+ '/'+${year}+'/'+${name}+'/images'" 
+					target="" title="Click for more information">View Conference Gallery</a></li>
+				<li><a th:with="year=${#dates.year(previousConference.startDateTime)},name=${previousConference.urlKeyword}" th:href="${omicsBaseURL}+ '/'+${year}+'/'+${name}+'/proceedings'" target=""
+					title="Click for more information">View Proceedings</a></li>
+			</ul>
+      <!-- <form action="#" id="subscribeForm" class="form-horizontal cmxform wrapper cf" >
+        <input class="subscriptionEmail" placeholder="Email Address" name='email' type="text" />
+							<input name='type' type="hidden" th:value="1" />
+							 <input name='id' type="hidden" th:value="${conference.topicId}" /> 
+							<input type="button" value="Subscribe" id="subscribe"></input>
+    </form> -->
+    
+    <div class="search_field">
+    <form action="#" id="subscribeForm">
+    <input class="subscriptionEmail" placeholder="Email Address" name='email' type="text" />
+   <input name='type' type="hidden" th:value="1" />
+							 <input name='id' type="hidden" th:value="${conference.topicId}" /> 
+							<input type="button" value="Subscribe" id="subscribe"></input>
+							</form>
+</div>
+
+    <!-- <div class="row totalWrapArea">
+    <div class="col-lg-10 emailBox pull-left"><input class="subscriptionEmail" placeholder="Email Address" name='email' type="text" /></div>
+    <div class="col-lg-1 subscribeButton pull-right"><input type="button" value="Subscribe" id="subscribe"></input></div>
+    
+    </div> -->
+			</div>
+			   <div th:if="${previousConference} == null" class="search_field">
+    <form  id="subscribeForm">
+    <input class="subscriptionEmail" placeholder="Email Address" name='email' type="text" />
+   <input name='type' type="hidden" th:value="1" />
+							 <input name='id' type="hidden" th:value="${conference.topicId}" /> 
+							<input type="button" value="Subscribe" id="subscribe"></input>
+							</form>
+</div>
+			</div>
+		<div class="row" th:if="${conference.policy} and ${#strings.length(conference.policy)} gt 0">
+<div class="col-md-12">
+			<h4 class="text-center">
+				<strong>Authorization Policy</strong>
+			</h4>
+			<div class="row">
+			<div class="col-md-2 col-sm-12"></div>
+			<div th:utext="${conference.policy}" class="col-md-8 col-sm-12  text-center">Policy</div>
+			</div>
+	</div>
+
+</div>
+		</div>
+	<div th:unless="${conferencePage}"></div>
+</div>
+
+<!-- Contacts footer -->
+<div th:fragment="sociallinksfooter(conferencePage)" class="col-md-6">
+	<div th:if="${conferencePage}">	
+		
+		<a class="btn btn-circle" href="#" target="_blank" th:if="${socialMediaLinks.blogSpotLink} and ${#strings.length(socialMediaLinks.blogSpotLink)} gt 0"
+			th:href="${socialMediaLinks.blogSpotLink}"><i
+			class="fa fa-bold"></i></a> 
+		
+		<a class="btn btn-circle" href="#" target="_blank"
+			th:if="${socialMediaLinks.facebookLink} and ${#strings.length(socialMediaLinks.facebookLink)} gt 0"
+			th:href="${socialMediaLinks.facebookLink}"><i
+			class="fa fa-facebook"></i>			
+			</a> 
+			
+		<a class="btn btn-circle" href="#" target="_blank" th:if="${socialMediaLinks.flickrLink} and ${#strings.length(socialMediaLinks.flickrLink)} gt 0"
+		th:href="${socialMediaLinks.flickrLink}"><i class="fa fa-flickr"></i></a>
+		
+		<a class="btn btn-circle" href="#" target="_blank" th:if="${socialMediaLinks.googlePlusLink} and ${#strings.length(socialMediaLinks.googlePlusLink)} gt 0"
+			th:href="${socialMediaLinks.googlePlusLink}"><i
+			class="fa fa-google-plus"></i></a> 
+			
+		<a class="btn btn-circle" href="#" target="_blank" th:if="${socialMediaLinks.linkedinLink} and ${#strings.length(socialMediaLinks.linkedinLink)} gt 0"
+			th:href="${socialMediaLinks.linkedinLink}"><i
+			class="fa fa-linkedin"></i></a>
+			
+		<a class="btn btn-circle" href="#" target="_blank" th:if="${socialMediaLinks.pinterestLink} and ${#strings.length(socialMediaLinks.pinterestLink)} gt 0"
+		th:href="${socialMediaLinks.pinterestLink}"><i
+		class="fa fa-pinterest"></i></a> 	
+		
+		<a class="btn btn-circle"
+			href="#" target="_blank" th:if="${socialMediaLinks.rssFeedLink} and ${#strings.length(socialMediaLinks.rssFeedLink)} gt 0"  th:href="${socialMediaLinks.rssFeedLink}"><i
+			class="fa fa-rss"></i></a>
+			
+		<a class="btn btn-circle" href="#" target="_blank" th:if="${socialMediaLinks.twitterLink} and ${#strings.length(socialMediaLinks.twitterLink)} gt 0"
+			th:href="${socialMediaLinks.twitterLink}"><i
+			class="fa fa-twitter"></i></a> 	 
+			
+		<a class="btn btn-circle" href="#" target="_blank" th:if="${socialMediaLinks.youtubeLink} and ${#strings.length(socialMediaLinks.youtubeLink)} gt 0"
+			th:href="${socialMediaLinks.youtubeLink}"><i
+			class="fa fa-youtube"></i></a>
+	</div>
+	<div th:unless="${conferencePage}">
+
+<th th:if="${not #lists.isEmpty(omicsSocialMediaLinks)}">
+<th th:each="link : ${omicsSocialMediaLinks}">
+<th  th:if="${link.type == 'FACEBOOK LINK'}">
+<a class="btn btn-circle" href="#" target="_blank" th:if="${link.value} and ${#strings.length(link.value)} gt 0"
+			th:href="${link.value}"><i
+			class="fa fa-facebook"></i></a>
+</th>
+
+<th  th:if="${link.type == 'TWITTER LINK'}">
+
+<a class="btn btn-circle" href="#" target="_blank" th:if="${link.value} and ${#strings.length(link.value)} gt 0"
+			th:href="${link.value}"><i
+			class="fa fa-twitter"></i></a>
+</th>
+
+<th  th:if="${link.type == 'YOUTUBE  LINK'}">
+
+<a class="btn btn-circle" href="#" target="_blank" th:if="${link.value} and ${#strings.length(link.value)} gt 0"
+			th:href="${link.value}"><i
+			class="fa fa-youtube"></i></a>
+</th>
+
+<th  th:if="${link.type == 'LINKEDIN Link'}">
+<a class="btn btn-circle" href="#" target="_blank" th:if="${link.value} and ${#strings.length(link.value)} gt 0"
+			th:href="${link.value}"><i
+			class="fa fa-linkedin"></i></a>
+</th>
+
+<th  th:if="${link.type == 'FLICKR LINK'}">
+<a class="btn btn-circle" href="#" target="_blank" th:if="${link.value} and ${#strings.length(link.value)} gt 0"
+			th:href="${link.value}"><i
+			class="fa fa-flickr"></i></a>
+</th>
+
+<th  th:if="${link.type == 'GOOGLE+ LINK'}">
+<a class="btn btn-circle" href="#" target="_blank" th:if="${link.value} and ${#strings.length(link.value)} gt 0"
+			th:href="${link.value}"><i
+			class="fa fa-google-plus"></i></a>
+</th>
+
+<th  th:if="${link.type == 'PINTEREST LINK'}">
+<a class="btn btn-circle" href="#" target="_blank" th:if="${link.value} and ${#strings.length(link.value)} gt 0"
+			th:href="${link.value}"><i
+			class="fa fa-pinterest"></i></a>
+</th>
+
+<th  th:if="${link.type == 'RSS FEED LINK'}">
+<a class="btn btn-circle" href="#" target="_blank" th:if="${link.value} and ${#strings.length(link.value)} gt 0"
+			th:href="${link.value}"><i
+			class="fa fa-rss"></i></a>
+</th>
+
+<th  th:if="${link.type == 'BLOG SPOT LINK'}">
+<a class="btn btn-circle" href="#" target="_blank" th:if="${link.value} and ${#strings.length(link.value)} gt 0"
+			th:href="${link.value}"><i
+			class="fa fa-bold"></i></a>
+</th>
+
+<th  th:if="${link.type == 'SLIDE SHARE LINK'}"> 
+<a class="btn btn-circle" target="_blank" href="#" th:if="${link.value} and ${#strings.length(link.value)} gt 0"
+			th:href="${link.value}"><i
+			class="fa fa-slideshare"></i></a>
+</th>
+</th>
+</th>
+</div>
+</div>
+
+<div th:fragment="footerGlobalAddress(showSubscribe)">
+   <!-- <div class="row"> -->
+   
+ <!--   <div class="col-md-4">
+   
+  <div class="contents" th:if="${not #lists.isEmpty(omicsSocialMediaLinks)}">
+  
+  <h4>Contact us at</h4>
+<th th:each="link : ${omicsSocialMediaLinks}">
+<th  th:if="${link.type == 'CONTACT DETAILS'}">
+<p th:if="${link.value} and ${#strings.length(link.value)} gt 0" th:text="${link.value}"></p>
+</th>
+
+<th  th:if="${link.type == 'TELEPHONE NUMBER'}">
+<p th:if="${link.value} and ${#strings.length(link.value)} gt 0" th:text="${link.value}"></p>
+</th>
+
+<th  th:if="${link.type == 'FAX'}">
+<p th:if="${link.value} and ${#strings.length(link.value)} gt 0" th:text="${link.value}"></p>
+</th>
+
+<th  th:if="${link.type == 'EMAIL'}">
+ 	<a class="mailContact" th:if="${link.value} and ${#strings.length(link.value)} gt 0 " th:text="${link.value}" >contact@conferenceseries.com</a>  
+</th>
+
+</th>
+</div>
+ </div> -->
+   
+  <!--  <div class="row col-md-7">
+   <div class="pull-right search_field" th:if="${showSubscribe}">
+				<form action="#" id="subscribeForm">
+					<input class="subscriptionEmail" placeholder="Email Address"
+						name='email' type="text" /> <input name='type' type="hidden"
+						th:value="2" /> <input name='id' type="hidden"
+						th:value="${university.id}" /> <input type="button"
+						value="Subscribe" id="subscribe"></input>
+				</form>
+			</div>
+<div class="footer_authorizationPolicy">
+			<h4 class="text-center">
+				<strong>Authorization Policy</strong>
+			</h4>
+			<div class="col-md-12 text-center">By
+ registering for the conference you grant permission to OMICS 
+International to photograph, film or record and use your name, likeness,
+ image, voice and comments and to publish, reproduce, exhibit, 
+distribute, broadcast, edit and/or digitize the resulting images and 
+materials in publications, advertising materials, or in any other form 
+worldwide without compensation. Taking of photographs and/or videotaping
+ during any session is prohibited. Contact us for any queries. - See 
+more at: 
+http://eye.conferenceseries.com/organizing-committee.php#sthash.HZGrGmKX.dpuf</div>
+		
+	</div>
+   
+  <div class="pull-right search_field" th:if="${showSubscribe}">
+				<form action="#" id="subscribeForm">
+					<input class="subscriptionEmail" placeholder="Email Address"
+						name='email' type="text" /> <input name='type' type="hidden"
+						th:value="2" /> <input name='id' type="hidden"
+						th:value="${university.id}" /> <input type="button"
+						value="Subscribe" id="subscribe"></input>
+				</form>
+			</div></div> -->
+ <!--   </div> -->
+   
+   <!-- 
+   <div class="row">
+   <div class="row">
+   <div class="col-md-2"></div>
+<div class="col-md-8">
+			<h4 class="text-center">
+				<strong>Authorization Policy</strong>
+			</h4>
+			<div class="col-md-12 text-center">By
+ registering for the conference you grant permission to OMICS 
+International to photograph, film or record and use your name, likeness,
+ image, voice and comments and to publish, reproduce, exhibit, 
+distribute, broadcast, edit and/or digitize the resulting images and 
+materials in publications, advertising materials, or in any other form 
+worldwide without compensation. Taking of photographs and/or videotaping
+ during any session is prohibited. Contact us for any queries. - See 
+more at: 
+http://eye.conferenceseries.com/organizing-committee.php#sthash.HZGrGmKX.dpuf</div>
+		
+	</div>
+   <div class="col-md-2"></div>
+</div>
+   </div> -->
+   <div class="row" th:if="${not #lists.isEmpty(subjectContacts)}">
+   <div class="col-md-3 subjectInfo" th:each="subjectContact : ${subjectContacts}">
+   <p class="subjectName" th:text="${subjectContact.name}+' '+ Conferences"></p>
+   <p class="contactName" th:if="${subjectContact.contactName}!=''"><span class="fa fa-user"></span><span th:text="${subjectContact.contactName}"></span></p>
+   <p class="contactEmail" th:if="${subjectContact.contactEmail}!=''"><span class="fa fa-envelope"></span><span><a th:href="'mailto:'+${subjectContact.contactEmail}" th:text="${subjectContact.contactEmail}"></a></span></p>
+   <th class="contactPhone"  th:if="${subjectContact.contactPhone} !='' ">
+   
+   <p class="phoneExtension"><span class="fa fa-phone"></span><span th:text="${subjectContact.phoneExtension} != '' ? (${subjectContact.contactPhone}+' Ext: '+${subjectContact.phoneExtension}):${subjectContact.contactPhone}"></span></p></th>
+   </div>
+   </div>
+   <div class="row footerLinks">
+   <div class="col-md-9">
+	<p th:if="${not #lists.isEmpty(omicsSocialMediaLinks)}" >Program Enquiries&nbsp;|&nbsp;Symposia/Workshops&nbsp; |&nbsp;Sponsorships&nbsp; |&nbsp;Media Partners&nbsp;|&nbsp;Advertising&nbsp; @ &nbsp;&nbsp; <strong th:each="link : ${omicsSocialMediaLinks}" th:if="${link.type == 'EMAIL'}"><a class="mailContact" th:if="${link.value} and ${#strings.length(link.value)} gt 0 " th:href="'mailto:'+${link.value}" th:text="${link.value}" >contact@conferenceseries.com</a> </strong></p>
+	</div>
+	<div class="col-md-3">
+	 <div class="pull-right search_field" th:if="${showSubscribe}">
+				<form action="#" id="subscribeForm">
+					<input class="subscriptionEmail" placeholder="Email Address"
+						name='email' type="text" /> <input name='type' type="hidden"
+						th:value="2" /> <input name='id' type="hidden"
+						th:value="${university.id}" /> <input type="button"
+						value="Subscribe" id="subscribe"></input>
+				</form>
+			</div>
+	</div>
+</div>
+
+</div>
+
+<div th:fragment="googleAnalytics(pageType)" class="col-md-6">
+<th th:if="${pageType==1}">
+	
+	<script th:if="${conference} != null and ${conference.id} > 0" th:inline="javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69439979-1', 'auto');
+  var dimensionValue = [[${conference.title}]]+" "+[[${conference.city.name}]] +" "+[[${currentYear}]]  ;
+  ga('set', 'dimension1', dimensionValue);
+  ga('send', 'pageview');
+  </script>
+
+</th>
+<th th:if="${pageType==2}">
+  
+  	<script th:if="${subject} != null and ${subject.id} > 0" th:inline="javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69439979-1', 'auto');
+  var dimensionValue = [[${subject.name}]];
+  ga('set', 'dimension3', dimensionValue);
+  ga('send', 'pageview');
+  </script>
+</th>
+<th th:if="${pageType==5}">
+  
+  	<script  th:inline="javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69439979-1', 'auto');
+  var dimensionValue = 'Omics Home Page';
+  ga('set', 'dimension7', dimensionValue);
+  ga('send', 'pageview');
+  </script>
+
+</th>
+
+<th th:if="${pageType==6}">
+  	<script  th:inline="javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69439979-1', 'auto');
+  var dimensionValue = 'University Search Page';
+  ga('set', 'dimension6', dimensionValue);
+  ga('send', 'pageview');
+  </script>
+
+</th>
+
+
+<th th:if="${pageType==7}">
+  
+  	<script  th:inline="javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69439979-1', 'auto');
+  var dimensionValue = 'Conference Search Page';
+  ga('set', 'dimension5', dimensionValue);
+  ga('send', 'pageview');
+  </script>
+
+</th>
+
+<th th:if="${pageType==8}">
+  
+  	<script th:if="${country} != null and ${country.id} > 0" th:inline="javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69439979-1', 'auto');
+  var dimensionValue = [[${country.name}]];
+  ga('set', 'dimension4', dimensionValue);
+  ga('send', 'pageview');
+  </script>
+
+</th>
+
+<th th:if="${pageType==9}">
+  
+  	<script th:if="${university} != null and ${university.id} > 0" th:inline="javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69439979-1', 'auto');
+  var dimensionValue = [[${university.name}]];;
+  ga('set', 'dimension9', dimensionValue);
+  ga('send', 'pageview');
+  </script>
+
+</th>
+
+
+
+</div>

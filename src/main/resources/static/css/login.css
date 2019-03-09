@@ -1,0 +1,167 @@
+/*  Variables  */
+/*   Mixins  */
+/*  Transition  */
+/*  Box Sizing  */
+/*  Box Shadow  */
+/*  Border Radius  */
+/*  Opacity  */
+body {
+  background: #ffffff no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width: 100%;
+}
+
+/*  Login page CSS  */
+.login-container {
+  margin: 50px auto;
+  text-align: center;
+}
+.login-container .login-header {
+  background: #f2f2f2;
+  padding: 10px 5px;
+  text-align: center;
+  font-weight: 800;
+  border-bottom: 1px solid #d9d9d9;
+  border-radius: 2px 2px 0 0;
+}
+.login-container .login-wrapper {
+  background: white;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding-bottom: 20px;
+}
+  .login-container .login-wrapper h5 {
+    margin-top: 30px;
+  }
+.login-container a.fb-btn {
+  width: 300px;
+  height: 48px;
+  margin: 20px auto;
+  padding: 0;
+}
+.login-container form {
+  padding: 20px 25px;
+}
+.login-container .form-control {
+  height: 48px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  box-shadow: none;
+}
+  .login-container .form-control:focus {
+    border: 1px solid #a4c2dc;
+  }
+.login-container .form-control-feedback {
+  font-size: 24px;
+  top: 34px;
+  color: #4d4d4d;
+}
+.login-container .form-group label {
+  text-align: left !important;
+  display: block;
+}
+.login-container a {
+  padding: 15px;
+  display: block;
+}
+.login-container a.underline {
+  text-decoration: underline; 
+}
+
+
+.loginBg .row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+
+.loginBg #signUpForm .form-control {
+    border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    -khtml-border-radius: 0 !important;
+    -webkit-border-radius: 0 !important;    
+}
+
+.loginBg #signUpForm .first-child {
+    border-radius: 5px 5px 0px 0px !important;
+    -moz-border-radius: 5px 5px 0px 0px !important;
+    -khtml-border-radius: 5px 5px 0px 0px !important;
+    -webkit-border-radius: 5px 5px 0px 0px !important;   	
+}
+
+.loginBg #signUpForm .last-child {
+    border-radius: 0px 0px 5px 5px !important;
+    -moz-border-radius: 0px 0px 5px 5px !important;
+    -khtml-border-radius: 0px 0px 5px 5px !important;
+    -webkit-border-radius: 0px 0px 5px 5px !important;   	
+}
+
+
+.loginBg .form-control::-moz-placeholder {
+    color: #8697a5;
+    opacity: 1;
+}
+
+.loginBg form {
+    padding: 20px 0;
+}
+
+.login-container .login-header {
+    background: #fafbfc none repeat scroll 0 0;
+    font-family: "Alegreya Sans SC",sans-serif;
+ 	font-weight: 500;   
+}
+
+
+.login-container .btn-block {
+	background-image: -webkit-linear-gradient(top, #ff8247 0%, #ff5300 100%);
+	background-image: -moz-linear-gradient(top, #ff8247 0%, #ff5300 100%);
+	background-image: -ms-linear-gradient(top, #ff8247 0%, #ff5300 100%);
+	background-image: -o-linear-gradient(top, #ff8247 0%, #ff5300 100%);
+	background-image: linear-gradient(top, #ff8247 0%, #ff5300 100%);
+	height: 36px;
+	font-size: 15px;
+	text-align: center;
+	border-radius: 6px 6px 6px 6px;
+	-mox-border-radius: 6px 6px 6px 6px;
+	-webkit-border-radius: 6px 6px 6px 6px;
+	-khtml-border-radius: 6px 6px 6px 6px;
+}
+
+.login-container .login-wrapper {
+	background: #fafbfc;
+	border: 1px solid #e9edf1;
+}
+
+
+.reglogin .modal-dialog {
+    background-color: #fafbfc;
+    height: auto;
+    width: 372px;
+    border-radius: 10px 10px 10px 10px;
+	-mox-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	-khtml-border-radius: 10px 10px 10px 10px;
+}
+
+.reglogin .form-group {
+	text-align: left;
+}
+
+.reglogin .control-label {
+	color: #6f7f8f;
+	font-size: 13px;
+}
+
+#forgotPasswordForm .form-control {
+	height: 35px;
+}
+
+#forgotPasswordForm .btn-block {
+	line-height: 1;
+}
